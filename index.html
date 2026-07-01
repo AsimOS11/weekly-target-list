@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Target</title>
+<meta name="description" content="Set a date range, break it into a focused session, and track your weekly targets.">
+<meta name="theme-color" content="#BE9FE1">
+
+<!-- Favicon & icons -->
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="icons/favicon.ico">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <button class="logo" id="logoBtn" title="Home">
+      <span class="logo-mark"></span>
+      <span>Weekly<em>Target</em></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+      <span class="icon-sun">&#9728;</span><span class="icon-moon">&#9789;</span>
+    </button>
+  </header>
+
+  <main id="app">
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page">
+      <div class="hero">
+        <h1>Set your target window</h1>
+        <p class="hero-sub">Pick a start and end date. Everything in between becomes one focused session.</p>
+        <form id="sessionForm" class="date-form">
+          <div class="field field-title">
+            <label for="sessionTitle">Title (optional)</label>
+            <input type="text" id="sessionTitle" placeholder="e.g. Exam prep, Fitness push" maxlength="60">
+          </div>
+          <div class="date-row">
+            <div class="field">
+              <label for="startDate">Start date</label>
+              <input type="date" id="startDate" required>
+            </div>
+            <div class="field">
+              <label for="endDate">End date</label>
+              <input type="date" id="endDate" required>
+            </div>
+            <button type="submit" class="btn-primary">+ Add</button>
+          </div>
+        </form>
+        <p class="form-error" id="formError" hidden></p>
+      </div>
+
+      <div class="sessions-area">
+        <div id="currentSessionWrap"></div>
+        <div id="otherSessionsWrap"></div>
+        <div id="emptyState" class="empty-state" hidden>
+          No sessions yet — choose your dates above to start your first one.
+        </div>
+      </div>
+    </section>
+
+    <!-- WEEK PAGE -->
+    <section id="page-week" class="page" hidden>
+      <div class="week-topbar">
+        <button id="backBtn" class="btn-back">&larr; Back</button>
+        <button id="deleteSessionBtn" class="btn-delete-session" title="Delete this session">&#128465; Delete session</button>
+      </div>
+      <div class="week-heading">
+        <h2 id="weekTitle"></h2>
+        <p class="week-subrange" id="weekSubrange" hidden></p>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-label" id="progressLabel"></span>
+      </div>
+
+      <form id="taskForm" class="task-form">
+        <input type="text" id="taskInput" placeholder="Write your task..." maxlength="140">
+        <button type="submit" class="btn-primary">+ Add</button>
+      </form>
+
+      <div class="stats-row" id="statsRow"></div>
+
+      <div id="priorityBox" class="priority-box" hidden>
+        <div class="priority-label"><span class="star">&#9733;</span> Top Priority</div>
+        <ul id="priorityList" class="task-list"></ul>
+      </div>
+
+      <ul id="taskList" class="task-list"></ul>
+      <p class="empty-tasks" id="emptyTasks" hidden>No tasks yet — add your first target above.</p>
+    </section>
+  </main>
+</div>
+
+<div id="confirmModal" class="modal-overlay" hidden>
+  <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="modalMessage">
+    <p class="modal-message" id="modalMessage"></p>
+    <div class="modal-actions">
+      <button type="button" id="modalCancel" class="btn-secondary">No</button>
+      <button type="button" id="modalConfirm" class="btn-danger">Yes, delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
